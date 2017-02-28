@@ -6,8 +6,8 @@ import openpyxl as reader
 import numpy
 import theano
 
-training_data = {}
-input_data = {}
+training_data_list = []
+input_data_list = []
 i = 0
 workbook = reader.load_workbook('data_carsmall.xlsx')
 
@@ -26,16 +26,13 @@ for row in list(first_sheet.iter_rows())[2:]:
 	else:
 		training_data.append((features, value))
 
-	# acceleration = row[0].value
-	# cylinders = row[1].value
-	# displacement = row[2].value
-	# horsepower = row[3].value
-	# weight = row[4].value
-	
-	# if row[5].value == "NaN":
-	# 	input_data[row[5].value] = {"Acceleration" : acceleration, "Cylinders" : cylinders, "Displacement" : displacement, "Horsepower" : horsepower, "Weight" : weight}
-	# else:
-	# 	training_data[row[5].value] = {"Acceleration" : acceleration, "Cylinders" : cylinders, "Displacement" : displacement, "Horsepower" : horsepower, "Weight" : weight} 
-	
+for i in training_data:
+	training_data_list.append(i[0])
 for i in testing_data:
-	print(i[0])
+	input_data_list.append(i[0])
+
+training_matrix = numpy.array(training_data_list)
+testing_matrix = numpy.array(input_data_list)
+
+print(testing_matrix.shape)
+print(training_matrix.shape)
