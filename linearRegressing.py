@@ -31,8 +31,10 @@ for i in training_data:
 for i in testing_data:
 	input_data_list.append(i[0])
 
-training_matrix = numpy.array(training_data_list)
-testing_matrix = numpy.array(input_data_list)
+training_matrix = numpy.squeeze(numpy.asarray(training_data_list), axis=(1,))
+testing_matrix = numpy.squeeze(numpy.asarray(input_data_list), axis=(1,))
+values = numpy.asarray(training_data[i][1] for i in range(len(training_data)))
 
 print(testing_matrix.shape)
-print(training_matrix.shape)
+print((training_matrix).shape)
+print(training_data[0][1])
