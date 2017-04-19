@@ -7,11 +7,8 @@ Description : This routine uses gradient descent method to return the point of m
 import math
 
 degree = input("Highest Degree of the polynomial : ")
-
 coefs = input("Enter the co-efficient of each term starting with highest degree first (separate them by spaces) : ").split()
-
 descent_rate = float(input("Rate of descent : "))
-
 starting_point = float(input("Starting point : "))
 
 grad_coef_vector = []
@@ -29,7 +26,6 @@ for x in range(power+1):
 grad_coef_vector = list(reversed(grad_coef_vector))
 
 print(grad_coef_vector)
-
 
 error = float('inf')
 while (error >= permissible_error):
