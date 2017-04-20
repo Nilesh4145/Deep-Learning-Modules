@@ -1,50 +1,46 @@
 '''
 Author : Nilesh Chaturvedi
-Last updated : 18th April 2017
+Last updated : 20th April 2017
 
 Description : This routine uses gradient descent method to return the point of minima of a polynomial. 
 '''
+
+import numpy as np
 import math
 
-degree = input("Highest Degree of the polynomial : ")
-coefs = input("Enter the co-efficient of each term starting with highest degree first (separate them by spaces) : ").split()
-descent_rate = float(input("Rate of descent : "))
-starting_point = float(input("Starting point : "))
+def grad(coefs, x): 
+	# Returns value of gradient at point x for the function with given co-efficients
+	grad = []
+	[grad.append(int(i)) for i in coefs]
 
-grad_coef_vector = []
-permissible_error = 0.0000001
-gradient = 0
+	poly_obj= np.poly1d(grad)
+	grad_vec = np.polyder(poly_obj)
 
-x0 = starting_point
-xn = 0
+	grad_val = (np.poly1d(grad_vec))(x)
 
-power = int(degree)
-for x in range(power+1):
-	grad_coef_vector.append(power * int(coefs[x]))
-	power -= 1 
+	return(grad_val)
 
-grad_coef_vector = list(reversed(grad_coef_vector))
+def main():
 
-print(grad_coef_vector)
+	degree = input("Highest Degree of the polynomial : ")
+	coefs = input("Enter the co-efficient of each term starting" 
+		"with highest degree first (separate them by spaces) : ").split()
+	descent_rate = float(input("Rate of descent : "))
+	starting_point = float(input("Starting point : "))
 
-error = float('inf')
-while (error >= permissible_error):
-	power = 0
+	permissible_error = 0.00000000000001
 	gradient = 0
-	if(xn == 0):
-		gradient  = grad_coef_vector[1]
-	else:
-		for i in grad_coef_vector[1:]:
-			gradient += i * math.pow(xn, power) 
-			power+=1
+	x0 = starting_point
+	xn = 0
+	error = float('inf')
 
-	# Calculate gradient	
-	print("gradient %d"%gradient)
-	xn = x0 - (descent_rate * gradient)
-	print("xn %d"%xn)
-	error = abs(xn - x0)
-	print("error %d"%error)
-	x0=xn
+	while (error >= permissible_error):
+		x0=xn
+		gradient = grad(coefs, x0)
+		xn = x0 - (descent_rate * gradient)
+		error = abs(xn - x0)
 
+	print(" Point of minima is : {}".format(xn))
 
-print(" Point of minima is : {}".format(xn))
+if __name__ == "__main__":
+	main()
