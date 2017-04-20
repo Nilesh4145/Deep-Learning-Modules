@@ -6,24 +6,43 @@ import math
 X1 = [60.1826, 86.30855]
 X2 = [0.051267, 0.69956]
 
-def fun(x, y):
-  return math.log(1+ math.exp(x*X1[0] + y*X1[1]))
+def logit(x, y, X, Y):
+	return math.log(1+ math.exp(x*X + y*Y))
+
+def linear(x, y, X, Y):
+	bias = 5
+	return x*X + y*Y + bias
 
 fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+ax1 = fig.add_subplot(111, projection='3d')
+ax2 = fig.add_subplot(121, projection='3d')
+ax3 = fig.add_subplot(222, projection='3d')
 n = 10
 xs = np.linspace(0, 1, 50)
 ys = np.linspace(0, 1, 50)
-zs = [fun(x, y) for x,y in zip(xs,ys)]
+z1 = [logit(x, y, X1[0], X1[1]) for x,y in zip(xs,ys)]
+z2 = [logit(x, y, X2[0], X2[1]) for x,y in zip(xs,ys)]
+z3 = [linear(x, y, X2[0], X2[1]) for x,y in zip(xs,ys)]
 
-ax.plot(xs, ys, zs)
+ax1.plot(xs, ys, z1, label = "Logistic Regression with dataset 1")
+ax2.plot(xs, ys, z2, label = "Logistic Regression with dataset 2")
+ax3.plot(xs, ys, z3, label = "Linear Regression with dataset 2")
 
-# ax.set_xlabel('X Label')
-# ax.set_ylabel('Y Label')
-# ax.set_zlabel('Z Label')
+ax1.set_xlabel('X')
+ax1.set_ylabel('Y')
+ax1.set_zlabel('Z')
+
+ax2.set_xlabel('X')
+ax2.set_ylabel('Y')
+ax2.set_zlabel('Z')
+
+ax3.set_xlabel('X')
+ax3.set_ylabel('Y')
+ax3.set_zlabel('Z')
 
 
-plt.show()
+
+plt.savefig("new.pdf")
 
 # import math
 # import numpy
